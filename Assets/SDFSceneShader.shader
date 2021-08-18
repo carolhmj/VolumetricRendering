@@ -3,8 +3,8 @@
     Properties
     {
         _Color("Color", Color) = (0,1,0,1)
-        _OuterRadius("Outer Radius", Range(0.1, 2)) = 0.4
-        _InnerRadius("Inner Radius", Range(0.1, 2)) = 0.8 
+        _OuterRadius("Outer Radius", Range(0.1, 2)) = 0.8
+        _InnerRadius("Inner Radius", Range(0.1, 2)) = 0.4 
     }
     SubShader
     {
@@ -55,12 +55,11 @@
 
             float map (float3 p)
             {
-                float o1 = fTorus(p, _OuterRadius, _InnerRadius);
+                float o1 = fTorus(p, _InnerRadius, _OuterRadius);
                 pR(p.xy, 1.57);
-                float o2 = fTorus(p, _OuterRadius, _InnerRadius);
+                float o2 = fTorus(p, _InnerRadius, _OuterRadius);
                 
                 return fOpUnionRound(o1, o2, 0.1);
-                //return o2;
             }
 
             fixed4 simpleLambert (fixed3 normal) {
@@ -95,9 +94,10 @@
             {
                 for (int i = 0; i < STEPS; i++)
                 {
-                    if ( map(position) < MIN_DISTANCE )
+                    float d = map(position);
+                    if ( d < MIN_DISTANCE )
                         return renderSurface(position);
-                    position += direction * STEP_SIZE;
+                    position += direction * d;
                 }
                 return fixed4(1,1,1,1);
             }

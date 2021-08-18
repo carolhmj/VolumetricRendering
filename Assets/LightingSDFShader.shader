@@ -78,9 +78,10 @@
             {
                 for (int i = 0; i < STEPS; i++)
                 {
-                    if ( map(position) < MIN_DISTANCE )
+                    float d = map(position);
+                    if ( d < MIN_DISTANCE )
                         return renderSurface(position);
-                    position += direction * STEP_SIZE;
+                    position += direction * d;
                 }
                 return fixed4(1,1,1,1);
             }

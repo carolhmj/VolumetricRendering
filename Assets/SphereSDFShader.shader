@@ -47,9 +47,10 @@
             {
                 for (int i = 0; i < STEPS; i++)
                 {
-                    if ( sphereDistance(position) < MIN_DISTANCE )
+                    float d = sphereDistance(position);
+                    if (  d < MIN_DISTANCE )
                         return true;
-                    position += direction * STEP_SIZE;
+                    position += direction * d;
                 }
                 return false;
             }
